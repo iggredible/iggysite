@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bundle Your Javascript Code From Scratch | Hello there.</title>
+    <meta name="description" content="Things Iggy writes about">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.74245eb8.css" as="style"><link rel="preload" href="/assets/js/app.411ac2ac.js" as="script"><link rel="preload" href="/assets/js/2.826a9c57.js" as="script"><link rel="preload" href="/assets/js/13.2bba91b0.js" as="script"><link rel="prefetch" href="/assets/js/10.33a00c4d.js"><link rel="prefetch" href="/assets/js/11.9e2c5904.js"><link rel="prefetch" href="/assets/js/12.82d02492.js"><link rel="prefetch" href="/assets/js/14.496d3aa4.js"><link rel="prefetch" href="/assets/js/15.8e326966.js"><link rel="prefetch" href="/assets/js/16.a4da2abb.js"><link rel="prefetch" href="/assets/js/17.8eec3b06.js"><link rel="prefetch" href="/assets/js/18.edb89630.js"><link rel="prefetch" href="/assets/js/19.4431ab75.js"><link rel="prefetch" href="/assets/js/20.4463634e.js"><link rel="prefetch" href="/assets/js/21.d60a97f5.js"><link rel="prefetch" href="/assets/js/22.443a8923.js"><link rel="prefetch" href="/assets/js/23.cdd341e7.js"><link rel="prefetch" href="/assets/js/3.14889d81.js"><link rel="prefetch" href="/assets/js/4.6512c86b.js"><link rel="prefetch" href="/assets/js/5.839bfab5.js"><link rel="prefetch" href="/assets/js/6.3a95a3b3.js"><link rel="prefetch" href="/assets/js/7.00a5fbce.js"><link rel="prefetch" href="/assets/js/8.27c044bc.js"><link rel="prefetch" href="/assets/js/9.b297b1cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.74245eb8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><header class="px-6 bg-white flex flex-wrap items-center py-8"><input type="checkbox" id="menu-toggle" class="hidden"> <label id="hamburger" for="menu-toggle" class="fixed cursor-pointer block z-20"><div id="burgerToggle" class="cursor-pointer"><span></span> <span></span> <span></span></div></label> <div id="sideMenu" class="bg-gray-800 z-10 fixed top-0 left-0 bottom-0 w-64"><ul class="my-16 mx-4"><li class="my-4 cursor-default hover:no-underline"><div class="container flex flex-col items-start justify-center"><div class="my-4"><img src="/assets/img/iggy_square.57401581.jpg" class="ml-0 h-20 w-20 mb-4 rounded-full"> <div class="font-bold text-white mb-4">Igor Irianto</div> <div class="font-light text-gray-500 text-sm">Frontend dev who likes to post about Vim, JS, and other computer stuff. Lives in Dallas. Married. He doesn't have a lot of twitter follower so you should <a href="https://twitter.com/iggredible">add him</a>.</div></div></div></li> <li class="my-4 text-white font-light"><a href="#">Blogs</a></li> <li class="my-4 text-white font-light"><a href="#">About</a></li></ul></div> <div class="absolute top-0 right-0 m-4"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header> <div class="container max-w-5xl mx-auto"><!----> <div class="max-w-4xl mx-auto"><div class="relative"><div class="fixed top-4 left-0 pl-5"><a href="/">Home</a></div> <div class="content mx-16 lg:mx-24"><h1 class="text-center">Bundle Your Javascript Code From Scratch</h1> <h6 class="text-center italic font-light m-4">Lessons from building bundler from scratch</h6> <h4></h4> <div class="content__default"><h1 id="intro"><a href="#intro" aria-hidden="true" class="header-anchor">#</a> Intro</h1> <p>Bundling is an indispensable part of building modern Javascript app. Webpack, Rollup, Parcel-bunder are some of the big name bundlers. For the most part, bundling has been a magical process: just give the bundler the entry, the output, add some other config, and <em>POOF</em>! - suddenly your bundle.js is ready.</p> <p><img src="https://thepracticaldev.s3.amazonaws.com/i/6pkw4boytmpzuki9wq31.gif" alt="magic"></p> <p>In this post, I will explain what a bundler is and why it is a good thing to use one - we will do it by creating one from scratch.</p> <h1 id="what-a-bundler-is-and-why-we-need-it"><a href="#what-a-bundler-is-and-why-we-need-it" aria-hidden="true" class="header-anchor">#</a> What a bundler is and why we need it</h1> <blockquote><p>A bundler is a tool that puts your entry code along with all its dependencies together in one JS file.</p></blockquote> <p>Why would we want to use it? Can't we just upload the entire files and directories of our project and not go through extra step?</p> <p>Here are two reasons:</p> <ol><li>Javascript initially had no standard/ built-in module system. <code>import</code> and <code>export</code> syntax is a recent convention in ES6. <a href="https://caniuse.com/#feat=es6-module" target="_blank" rel="noopener noreferrer">Not all browser supports it yet<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</li> <li>It is better to put everything together in one bundled file. Imagine a project where we have 5 different JS files. The client will have to make <strong>5 requests</strong> to your server (or CDN, or both - btw, it is <a href="https://stackoverflow.com/questions/7445909/bundling-js-files-vs-cdn" target="_blank" rel="noopener noreferrer">even better<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> to bundle them and put them in CDN.) - but that is still 4 extra requests that client could have avoided if our project was bundled up in one JS file (client will only have to make one request). <em>More requests = more overhead</em>.</li></ol> <p>I hope these are enough reasons to want to use a bundler. Let's move on to understanding how a bundler works</p> <p>Best way to understand how something works is to build/ tinker it.</p> <h1 id="building-bundler"><a href="#building-bundler" aria-hidden="true" class="header-anchor">#</a> Building bundler</h1> <p>Before we start, let's go through the basic of what our project will look like.</p> <p><img src="https://thepracticaldev.s3.amazonaws.com/i/t0tm22z42vxz0iskdgje.png" alt="bandler logo"></p> <p>Introducing <a href="https://github.com/iggredible/bandler" target="_blank" rel="noopener noreferrer">Bandler<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. The tiniest, cutest, awesomest bundler you have ever seen (ok, you can name it whatever. That's just what I named my bundler).</p> <p>Bandler will have a structure like this:</p> <p><code>entry.js</code> -&gt; <code>module1.js</code> -&gt; <code>module2.js</code></p> <p>The entry will be called <code>entry.js</code>. It will have one dependency, <code>module1.js</code>, which has a dependency, <code>module2.js</code>.</p> <p>Our project will use <a href="https://alligator.io/js/modules-es6/" target="_blank" rel="noopener noreferrer">ES6 module syntax<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>(<code>import</code>/<code>export</code>). Our task is to extend the module support to older browser. We have to transpile the ES6 syntax into something all/ most browsers can understand.</p> <p>Here are 8 steps how should do it:</p> <ol><li>Read content of <code>entry.js</code></li> <li>Parse that content and make a <strong>list</strong> of all <code>import</code> declarations</li> <li>Transpile the content from step 1 from ES6 to ES5</li> <li>Assign each dependency file with unique ID to be referenced later (for example, if we use <code>import module1 from './module1.js'</code> in entry, <code>./module1.js</code> is a dependency and we will map this with a unique ID)</li> <li>Put all of the info from steps 2-4 in one object</li> <li>Create a 'dependency graph' (by iterating through all dependencies,  all dependencies of each dependency, and so on; repeat steps 1-5)</li> <li>Pack everything in step 6 together</li> <li>Celebrate because our bundler is done! 🎊🙌</li></ol> <p>If it looks complicated, don't worry, because it is not.</p> <h2 id="starting-project"><a href="#starting-project" aria-hidden="true" class="header-anchor">#</a> Starting Project</h2> <p>In this section we'll do the setup: start a new directory for our project, <code>cd</code> into it, and install some libraries.</p> <p><code>mkdir bundler-playground &amp;&amp; cd $_</code></p> <p>Start npm project.</p> <p><code>npm init -y</code></p> <p>Install some additional libraries:</p> <ol><li><code>@babel/parser</code> to parse our code and returns an AST object</li> <li><code>@babel/traverse</code> to traverse/ walk through our AST object; this will help us look for all import declarations</li> <li><code>@babel/core</code> to transpile ES6 -&gt; ES5</li> <li><code>resolve</code> to get full path of each dependency (ex: turn <code>./module1.js</code> into something like <code>/User/iggy/project/bundler-playground/module1.js</code>)</li></ol> <p><code>npm install --save @babel/parser @babel/traverse @babel/core resolve</code></p> <p>Create a new <code>index.js</code> in root, and add import these guys:</p> <div class="language- extra-class"><pre class="language-text"><code> const fs = require(&quot;fs&quot;);
+ const path = require(&quot;path&quot;);
+ const parser = require(&quot;@babel/parser&quot;);
+ const traverse = require(&quot;@babel/traverse&quot;).default;
+ const babel = require(&quot;@babel/core&quot;); 
+ const resolve = require(&quot;resolve&quot;).sync;
+</code></pre></div><h2 id="get-module-info"><a href="#get-module-info" aria-hidden="true" class="header-anchor">#</a> Get module info</h2> <p>In this section, we will:</p> <ol><li>Assign a particular <code>filePath</code> with unique ID (to be referenced later)</li> <li>Get all dependencies used by this file (list all <code>import</code>s used)</li> <li>Transpile ES code</li></ol> <p>Here is the code for this section.</p> <div class="language- extra-class"><pre class="language-text"><code>let ID = 0;
+
+function createModuleInfo(filePath) {
+  const content = fs.readFileSync(filePath, &quot;utf-8&quot;);
+  const ast = parser.parse(content, {
+    sourceType: &quot;module&quot;
+  });
+  const deps = [];
+  traverse(ast, {
+    ImportDeclaration: ({ node }) =&gt; {
+      deps.push(node.source.value);
+    }
+  });
+  const id = ID++;
+  const { code } = babel.transformFromAstSync(ast, null, {
+    presets: [&quot;@babel/preset-env&quot;]
+  });
+
+  return {
+    id,
+    filePath,
+    deps,
+    code
+  };
+}
+</code></pre></div><p>We got the file content using <a href="https://nodejs.org/api/fs.html#fs_fs_readfilesync_path_options" target="_blank" rel="noopener noreferrer"><code>readFileSync()</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. Then we parsed the content to get <a href="https://stackoverflow.com/questions/16127985/what-is-javascript-ast-how-to-play-with-it" target="_blank" rel="noopener noreferrer">AST<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> information. Once AST is acquired, we traversed the AST and look for all import instances using <a href="https://github.com/babel/babel/blob/master/packages/babel-parser/ast/spec.md#importdeclaration" target="_blank" rel="noopener noreferrer"><code>ImportDeclaration</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> API. Lastly, we transpiled our code from ES6 using babel core's <a href="https://babeljs.io/docs/en/babel-core#transformfromastsync" target="_blank" rel="noopener noreferrer"><code>transformFromAstSync</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <p>For ID, we used a simple incrementing number (it's better to use random GUID, since it is a demo, <code>ID++</code> will do)</p> <p>With this, we have ourselves a nifty module information consisting of a unique ID, list of all dependencies (all imports), and the code inside that module. Next, we iterate the process for all relevant modules to create a dependency graph.</p> <h2 id="creating-dependency-graph"><a href="#creating-dependency-graph" aria-hidden="true" class="header-anchor">#</a> Creating Dependency Graph</h2> <p>Dependency graph is a collection of interrelated modules used in our app, starting from entry point.</p> <p>Here is a code for this section.</p> <div class="language- extra-class"><pre class="language-text"><code>function createDependencyGraph(entry) {
+  const entryInfo = createModuleInfo(entry);
+  const graphArr = [];
+  graphArr.push(entryInfo);
+  for (const module of graphArr) {
+    module.map = {};
+    module.deps.forEach(depPath =&gt; {
+      const baseDir = path.dirname(module.filePath);
+      const moduleDepPath = resolve(depPath, { baseDir });
+      const moduleInfo = createModuleInfo(moduleDepPath);
+      graphArr.push(moduleInfo);
+      module.map[depPath] = moduleInfo.id;
+    });
+  }
+  return graphArr;
+}
+</code></pre></div><p>We will be using an array type for our dependency graph. We start by pushing our entry info first.</p> <p>Then we iterate through dependency graph elements (starting with entry).</p> <div class="language- extra-class"><pre class="language-text"><code>const baseDir = path.dirname(module.filePath);
+const moduleDepPath = resolve(depPath, { baseDir });
+const moduleInfo = createModuleInfo(moduleDepPath);
+graphArr.push(moduleInfo);
+</code></pre></div><p>Here we use <code>path.dirname</code> and <code>resolve</code> to get full path of each module, get the info using the full path, and push that info into our dependency graph array.</p> <p>Note these lines:</p> <div class="language- extra-class"><pre class="language-text"><code>module.map = {};
+...
+module.map[depPath] = moduleInfo.id;
+</code></pre></div><p>Here we add an additional attribute <code>map</code> inside our <code>moduleInfo</code> object. This attribute will be used on next step as a <em>lookup</em> to map each module with unique identifier. For example:</p> <table><thead><tr><th>module</th> <th>ID</th></tr></thead> <tbody><tr><td>entry.js</td> <td>0</td></tr> <tr><td>module1.js</td> <td>1</td></tr> <tr><td>module2.js</td> <td>2</td></tr> <tr><td>etc</td> <td>n</td></tr></tbody></table> <p>In the end, we end up with an array of module infos of all dependency used in the entire project.</p> <h2 id="packing-them-all-together"><a href="#packing-them-all-together" aria-hidden="true" class="header-anchor">#</a> Packing them all together</h2> <p>Now that we have dependency graph, the last step is to <strong>pack</strong> them together.</p> <p><img src="https://thepracticaldev.s3.amazonaws.com/i/0rz8w9epr6il0ie6rea4.gif" alt="mickey packing"></p> <div class="language- extra-class"><pre class="language-text"><code>function pack(graph) {
+  const moduleArgArr = graph.map(module =&gt; {
+    return `${module.id}: {
+      factory: (exports, require) =&gt; {
+        ${module.code}
+      },
+      map: ${JSON.stringify(module.map)}
+    }`;
+  });
+  const iifeBundler = `(function(modules){
+    const require = id =&gt; {
+      const {factory, map} = modules[id];
+      const localRequire = requireDeclarationName =&gt; require(map[requireDeclarationName]); 
+      const module = {exports: {}};
+      factory(module.exports, localRequire); 
+      return module.exports; 
+    } 
+    require(0);
+  })({${moduleArgArr.join()}})
+  `;
+  return iifeBundler;
+}
+</code></pre></div><p>First, we create a factory pattern over the code of each module. It pass an <code>export</code> and <code>require</code>. Keep these 2 arguments in mind. We are keeping the map from previous step.</p> <div class="language- extra-class"><pre class="language-text"><code>return `${module.id}: {
+  factory: (exports, require) =&gt; {
+    ${module.code}
+  },
+  map: ${JSON.stringify(module.map)}
+  }`;
+</code></pre></div><p>Second, we created an IIFE to run the entire dependency graphs together. The next part might be confusing - I struggled to understand this part initially, but with patience, it will make sense!</p> <div class="language- extra-class"><pre class="language-text"><code>  const iifeBundler = `(function(modules){
+    const require = id =&gt; {
+      const {factory, map} = modules[id];
+      const localRequire = requireDeclarationName =&gt; require(map[requireDeclarationName]); 
+      const module = {exports: {}};
+      factory(module.exports, localRequire); 
+      return module.exports; 
+    } 
+    require(0);
+  })({${moduleArgArr.join()}})
+  `;
+</code></pre></div><ol><li>We are using IIFE pattern to scope the variables so they do not affect global variables</li> <li>The dependency graph we created earlier section is being passed as the argument (<code>${moduleArgArr.join()}</code>)</li> <li>That dependency graph is being passed inside IIFE as <code>modules</code></li> <li>We created a <code>require(id)</code> function. This function has two effects:</li></ol> <ul><li>It recursively calls its own with the ID of other dependencies via <code>require(map[requireDeclarationName])</code>. This translates to something like <code>require(1)</code> - recalling the mapping function earlier, turns into <code>require('./module1.js')</code></li> <li>It executes the actual code from step 1 (createModuleInfo) step when it runs <code>factory(module.exports, localRequire)</code></li> <li>This function returns <code>module.exports</code> - although it is initially empty (<code>{exports: {}}</code>), after running <code>factory()</code>, the value of this <code>module.exports</code> is the <code>exports</code> value inside <code>factory</code> we created earlier (think about it)</li></ul> <h2 id="code-repo"><a href="#code-repo" aria-hidden="true" class="header-anchor">#</a> Code Repo</h2> <p>The final code for this blog can be found <a href="https://github.com/iggredible/bandler/tree/ce43fa000b16931e9518e94506a81b381eed764b" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> to compare code.</p> <p>The full code will look something like this:</p> <div class="language- extra-class"><pre class="language-text"><code>const fs = require(&quot;fs&quot;);
+const path = require(&quot;path&quot;);
+const parser = require(&quot;@babel/parser&quot;); // parses and returns AST
+const traverse = require(&quot;@babel/traverse&quot;).default; // AST walker
+const babel = require(&quot;@babel/core&quot;); // main babel functionality
+const resolve = require(&quot;resolve&quot;).sync; // get full path to dependencies
+
+let ID = 0;
+
+/*
+ * Given filePath, return module information
+ * Module information includes:
+ * module ID
+ * module filePath
+ * all dependencies used in the module (in array form)
+ * code inside the module
+ */
+function createModuleInfo(filePath) {
+  const content = fs.readFileSync(filePath, &quot;utf-8&quot;);
+  const ast = parser.parse(content, {
+    sourceType: &quot;module&quot;
+  });
+  const deps = [];
+  traverse(ast, {
+    ImportDeclaration: ({ node }) =&gt; {
+      deps.push(node.source.value);
+    }
+  });
+  const id = ID++;
+  const { code } = babel.transformFromAstSync(ast, null, {
+    presets: [&quot;@babel/preset-env&quot;]
+  });
+
+  return {
+    id,
+    filePath,
+    deps,
+    code
+  };
+}
+
+/*
+ * Given entry path,
+ * returns an array containing information from each module
+ */
+function createDependencyGraph(entry) {
+  const entryInfo = createModuleInfo(entry);
+  const graphArr = [];
+  graphArr.push(entryInfo);
+  for (const module of graphArr) {
+    module.map = {};
+    module.deps.forEach(depPath =&gt; {
+      const baseDir = path.dirname(module.filePath);
+      const moduleDepPath = resolve(depPath, { baseDir });
+      const moduleInfo = createModuleInfo(moduleDepPath);
+      graphArr.push(moduleInfo);
+      module.map[depPath] = moduleInfo.id;
+    });
+  }
+  return graphArr;
+}
+
+/*
+ * Given an array containing information from each module
+ * return a bundled code to run the modules
+ */
+function pack(graph) {
+  const moduleArgArr = graph.map(module =&gt; {
+    return `${module.id}: {
+      factory: (exports, require) =&gt; {
+        ${module.code}
+      },
+      map: ${JSON.stringify(module.map)}
+    }`;
+  });
+  const iifeBundler = `(function(modules){
+    const require = id =&gt; {
+      const {factory, map} = modules[id];
+      const localRequire = requireDeclarationName =&gt; require(map[requireDeclarationName]); 
+      const module = {exports: {}};
+
+      factory(module.exports, localRequire); 
+      return module.exports; 
+    } 
+    require(0);
+  })({${moduleArgArr.join()}})
+  `;
+  return iifeBundler;
+}
+
+console.log(&quot;***** Copy code below and paste into browser *****&quot;);
+
+/* create dependency graph */
+const graph = createDependencyGraph(&quot;./entry.js&quot;); // wherever your entry is
+/* create bundle based on dependency graph */
+const bundle = pack(graph);
+
+console.log(bundle);
+console.log(&quot;***** Copy code above and paste into browser *****&quot;);
+
+</code></pre></div><p>If we run <code>node ./index.js</code>, we'll get something like</p> <div class="language- extra-class"><pre class="language-text"><code>(function(modules){
+    const require = id =&gt; {
+      const {factory, map} = modules[id];
+      const localRequire = requireDeclarationName =&gt; require(map[requireDeclarationName]);
+      const module = {exports: {}};
+
+      factory(module.exports, localRequire);
+      return module.exports;
+    }
+    require(0);
+  })({0: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+var _module = _interopRequireDefault(require(&quot;./module1.js&quot;));
+
+var _module2 = _interopRequireDefault(require(&quot;./module2.js&quot;));
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { &quot;default&quot;: obj }; }
+
+(0, _module[&quot;default&quot;])();
+(0, _module2[&quot;default&quot;])();
+      },
+      map: {&quot;./module1.js&quot;:1,&quot;./module2.js&quot;:2}
+    },1: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var _module = _interopRequireDefault(require(&quot;./module2.js&quot;));
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { &quot;default&quot;: obj }; }
+
+var module1 = function module1() {
+  (0, _module[&quot;default&quot;])();
+  console.log(&quot;hello from module1!&quot;);
+};
+
+var _default = module1;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {&quot;./module2.js&quot;:3}
+    },2: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var module2 = function module2() {
+  console.log(&quot;Hello from module2!&quot;);
+};
+
+var _default = module2;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {}
+    },3: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var module2 = function module2() {
+  console.log(&quot;Hello from module2!&quot;);
+};
+
+var _default = module2;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {}
+    }})(function(modules){
+    const require = id =&gt; {
+      const {factory, map} = modules[id];
+      const localRequire = requireDeclarationName =&gt; require(map[requireDeclarationName]);
+      const module = {exports: {}};
+
+      factory(module.exports, localRequire);
+      return module.exports;
+    }
+    require(0);
+  })({0: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+var _module = _interopRequireDefault(require(&quot;./module1.js&quot;));
+
+var _module2 = _interopRequireDefault(require(&quot;./module2.js&quot;));
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { &quot;default&quot;: obj }; }
+
+(0, _module[&quot;default&quot;])();
+(0, _module2[&quot;default&quot;])();
+      },
+      map: {&quot;./module1.js&quot;:1,&quot;./module2.js&quot;:2}
+    },1: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var _module = _interopRequireDefault(require(&quot;./module2.js&quot;));
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { &quot;default&quot;: obj }; }
+
+var module1 = function module1() {
+  (0, _module[&quot;default&quot;])();
+  console.log(&quot;hello from module1!&quot;);
+};
+
+var _default = module1;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {&quot;./module2.js&quot;:3}
+    },2: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var module2 = function module2() {
+  console.log(&quot;Hello from module2!&quot;);
+};
+
+var _default = module2;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {}
+    },3: {
+      factory: (exports, require) =&gt; {
+        &quot;use strict&quot;;
+
+Object.defineProperty(exports, &quot;__esModule&quot;, {
+  value: true
+});
+exports[&quot;default&quot;] = void 0;
+
+var module2 = function module2() {
+  console.log(&quot;Hello from module2!&quot;);
+};
+
+var _default = module2;
+exports[&quot;default&quot;] = _default;
+      },
+      map: {}
+    }})
+</code></pre></div><p>Copy/Paste that into browser and you'll see</p> <div class="language- extra-class"><pre class="language-text"><code>Hello from module2!
+hello from module1!
+Hello from module2!
+</code></pre></div><p>Congratulations! We have just built an entire bundler... from scratch!!</p> <p><img src="https://thepracticaldev.s3.amazonaws.com/i/ppozpb2ciyp2ciitsih7.gif" alt="traveling with giant luggage"></p> <h2 id="bonus"><a href="#bonus" aria-hidden="true" class="header-anchor">#</a> Bonus</h2> <p>In addition to creating an ES6 bundler, I attempted to create a bundler that bundles either CJS and ES6, <a href="https://github.com/iggredible/bandler" target="_blank" rel="noopener noreferrer">Bandler<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> (<a href="https://www.npmjs.com/package/bandler" target="_blank" rel="noopener noreferrer">NPM<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>)</p> <p>I won't go too deep here - but in addition to using babel parser and babel traverse, I used <a href="https://www.npmjs.com/package/detective" target="_blank" rel="noopener noreferrer"><code>detective</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> library that specifically searches and lists all CJS requires (ex: <code>require('./your/lib.js')</code>) instances from a project. I saw that Babel does not have CJS syntax declaration <a href="https://github.com/babel/babel/blob/master/packages/babel-parser/ast/spec.md" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <p>Can you think of some other ways to make CJS and ES6 bundler?</p> <h2 id="resources-links-etc"><a href="#resources-links-etc" aria-hidden="true" class="header-anchor">#</a> Resources, links, etc</h2> <p>Popular bundlers</p> <ul><li><a href="http://browserify.org/" target="_blank" rel="noopener noreferrer">browserify<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://webpack.js.org/" target="_blank" rel="noopener noreferrer">webpack<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://rollupjs.org/guide/en/" target="_blank" rel="noopener noreferrer">rollup<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://github.com/parcel-bundler/parcel" target="_blank" rel="noopener noreferrer">parcel-bundler<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <p>Inspirations for this post</p> <ul><li><a href="https://github.com/ronami/minipack/blob/master/src/minipack.js" target="_blank" rel="noopener noreferrer">minipack<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://github.com/adamisntdead/wbpck-bundler" target="_blank" rel="noopener noreferrer">wbpck-bundler<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <p>Readings on bundlers</p> <ul><li><a href="https://medium.com/@gimenete/how-javascript-bundlers-work-1fc0d0caf2da" target="_blank" rel="noopener noreferrer">bundler overview<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.freecodecamp.org/news/anatomy-of-js-module-systems-and-building-libraries-fadcd8dbd0e/" target="_blank" rel="noopener noreferrer">create your own bundler<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> - creator of wbpck-bundler mentioned above</li> <li><a href="https://dev.to/kayis/4-javascript-bundlers-2g4b" target="_blank" rel="noopener noreferrer">small list of popular js bundlers<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li>(Yet another) <a href="https://survivejs.com/webpack/appendices/comparison/" target="_blank" rel="noopener noreferrer">list of build tools<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.411ac2ac.js" defer></script><script src="/assets/js/2.826a9c57.js" defer></script><script src="/assets/js/13.2bba91b0.js" defer></script>
+  </body>
+</html>

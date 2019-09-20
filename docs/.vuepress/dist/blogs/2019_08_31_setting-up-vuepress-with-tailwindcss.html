@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Setting up vuepress with tailwindcss | Hello there.</title>
+    <meta name="description" content="Things Iggy writes about">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.74245eb8.css" as="style"><link rel="preload" href="/assets/js/app.411ac2ac.js" as="script"><link rel="preload" href="/assets/js/2.826a9c57.js" as="script"><link rel="preload" href="/assets/js/22.443a8923.js" as="script"><link rel="prefetch" href="/assets/js/10.33a00c4d.js"><link rel="prefetch" href="/assets/js/11.9e2c5904.js"><link rel="prefetch" href="/assets/js/12.82d02492.js"><link rel="prefetch" href="/assets/js/13.2bba91b0.js"><link rel="prefetch" href="/assets/js/14.496d3aa4.js"><link rel="prefetch" href="/assets/js/15.8e326966.js"><link rel="prefetch" href="/assets/js/16.a4da2abb.js"><link rel="prefetch" href="/assets/js/17.8eec3b06.js"><link rel="prefetch" href="/assets/js/18.edb89630.js"><link rel="prefetch" href="/assets/js/19.4431ab75.js"><link rel="prefetch" href="/assets/js/20.4463634e.js"><link rel="prefetch" href="/assets/js/21.d60a97f5.js"><link rel="prefetch" href="/assets/js/23.cdd341e7.js"><link rel="prefetch" href="/assets/js/3.14889d81.js"><link rel="prefetch" href="/assets/js/4.6512c86b.js"><link rel="prefetch" href="/assets/js/5.839bfab5.js"><link rel="prefetch" href="/assets/js/6.3a95a3b3.js"><link rel="prefetch" href="/assets/js/7.00a5fbce.js"><link rel="prefetch" href="/assets/js/8.27c044bc.js"><link rel="prefetch" href="/assets/js/9.b297b1cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.74245eb8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><header class="px-6 bg-white flex flex-wrap items-center py-8"><input type="checkbox" id="menu-toggle" class="hidden"> <label id="hamburger" for="menu-toggle" class="fixed cursor-pointer block z-20"><div id="burgerToggle" class="cursor-pointer"><span></span> <span></span> <span></span></div></label> <div id="sideMenu" class="bg-gray-800 z-10 fixed top-0 left-0 bottom-0 w-64"><ul class="my-16 mx-4"><li class="my-4 cursor-default hover:no-underline"><div class="container flex flex-col items-start justify-center"><div class="my-4"><img src="/assets/img/iggy_square.57401581.jpg" class="ml-0 h-20 w-20 mb-4 rounded-full"> <div class="font-bold text-white mb-4">Igor Irianto</div> <div class="font-light text-gray-500 text-sm">Frontend dev who likes to post about Vim, JS, and other computer stuff. Lives in Dallas. Married. He doesn't have a lot of twitter follower so you should <a href="https://twitter.com/iggredible">add him</a>.</div></div></div></li> <li class="my-4 text-white font-light"><a href="#">Blogs</a></li> <li class="my-4 text-white font-light"><a href="#">About</a></li></ul></div> <div class="absolute top-0 right-0 m-4"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header> <div class="container max-w-5xl mx-auto"><!----> <div class="max-w-4xl mx-auto"><div class="relative"><div class="fixed top-4 left-0 pl-5"><a href="/">Home</a></div> <div class="content mx-16 lg:mx-24"><h1 class="text-center">Setting up vuepress with tailwindcss</h1> <h6 class="text-center italic font-light m-4">setup vuepress with tailwindcss</h6> <h4></h4> <div class="content__default"><p>I have been looking for a simple Vue blog engine and decided to use <a href="https://vuepress.vuejs.org/" target="_blank" rel="noopener noreferrer">vuepress<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. I also have been wanting to learn about <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">tailwindcss<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. Why not use them together so I can learn <em>both</em> Vue framework and tailwindcss? That way I can kill two birds with one stone <em>(or in Chuck Norris's world, kill two stones with one bird)</em>.</p> <p><img src="https://media.giphy.com/media/SfCKK2pwXjIgo/giphy.gif" alt="chuck norris approves"></p> <p>There are several guides (<a href="https://www.amie-chen.com/blog/20190211-build-a-site-with-vuepress-part2.html" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> and <a href="https://dev.to/vuevixens/build-a-beautiful-website-with-vuepress-and-tailwindcss--3a03" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>) on vuepress + tailwindcss integration. They are very excellent guides - but it looks like these guides were written prior to tailwind v1.0.0 release and I could not get them to run (<a href="https://tailwindcss.com/docs/upgrading-to-v1/" target="_blank" rel="noopener noreferrer">major changes<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> were implemented between v0.x to v1.0).</p> <p>I decided to write this article for users using recent tailwindcss v1.+ and vuepress v1.+ (<em>I am using vuepress v1.0.3 and tailwindcss v1.1.2 at the time of this writing)</em>.</p> <p><strong>The repo for this article can be found <a href="https://github.com/iggredible/vuepress-tailwindcss" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</strong></p> <h1 id="setting-up-vuepress"><a href="#setting-up-vuepress" aria-hidden="true" class="header-anchor">#</a> Setting up Vuepress</h1> <p>Ensure vuepress is installed in machine. It will help in the future to save it globally.</p> <div class="language- extra-class"><pre class="language-text"><code>npm i -g vuepress
+</code></pre></div><p>Create your directory. I called mine <code>tailwind-press</code>.</p> <div class="language- extra-class"><pre class="language-text"><code>mkdir tailwind-press &amp;&amp; cd $_
+</code></pre></div><p>Start npm project. I used <code>-y</code> to skip questions.</p> <div class="language- extra-class"><pre class="language-text"><code>npm init -y
+</code></pre></div><p>Install vuepress dependency.</p> <div class="language- extra-class"><pre class="language-text"><code>npm i --save vuepress
+</code></pre></div><p>Per <a href="https://vuepress.vuejs.org/guide/basic-config.html#config-file" target="_blank" rel="noopener noreferrer">vuepress site<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>, it is recommended to due customization inside <code>/docs</code> folder with <code>/.vuepress</code> directory and <code>readme.md</code>, so let's do that.</p> <div class="language- extra-class"><pre class="language-text"><code>mkdir -p docs/.vuepress
+mkdir docs/blogs/
+touch docs/readme.md docs
+touch docs/blogs/blog1.md docs/blogs/blog2.md
+</code></pre></div><p>Fill blogs/blog1.md, blogs/blog2.md, and readme.md with some content.</p> <div class="language- extra-class"><pre class="language-text"><code>// readme.md
+# tailwind-press
+Hello!
+
+// blogs/blog1.md
+# Doc1
+doc1 test
+
+// blogs/blog2.md
+# Doc2
+doc2 test
+</code></pre></div><p>Your project should look like this now:</p> <div class="language- extra-class"><pre class="language-text"><code>.
+├─ docs
+│  ├─ readme.md
+│  ├─ blogs
+│  │  ├─ blog1.md
+│  │  └─ blog2.md
+│  └─ .vuepress
+│     └─ config.js
+└─ package.json
+</code></pre></div><p>Test vuepress by running:</p> <div class="language- extra-class"><pre class="language-text"><code>vuepress dev docs
+</code></pre></div><p>You should have a basic vuepress running at 8080. You can check out blog1 at http://localhost:8080/blogs/blog1.html.</p> <p>Sweetness! Part one is done. Time to customize it by applying our own theme.</p> <h1 id="overwriting-default-theme"><a href="#overwriting-default-theme" aria-hidden="true" class="header-anchor">#</a> Overwriting default theme</h1> <p>Add <code>config.js</code> inside <code>docs/.vuepress/</code> and put the following. This will add &quot;blogs&quot; nav with links to blog1 and blog2.</p> <div class="language- extra-class"><pre class="language-text"><code>module.exports = {
+  title: &quot;Hello Tailwind-Press!&quot;,
+  description: &quot;Blog v0.0.1&quot;,
+  themeConfig: {
+    nav: [
+      {
+        text: &quot;blogs&quot;,
+        items: [
+          { text: &quot;blog1&quot;, link: &quot;/blogs/blog1.md&quot; },
+          { text: &quot;blog2&quot;, link: &quot;/blogs/blog2.md&quot; }
+        ]
+      }
+    ]
+  }
+};
+</code></pre></div><p>Next is an important part of vuepress custom theme: to overwrite vuepress's default theme, you need to add <code>/theme/Layout.vue</code> in <code>/.vuepress</code> directory. Vuepress will <em>automagically</em> replace default theme to yours. Let's create <code>/theme/Layout.vue</code> inside <code>/.vuepress</code>. Your doc structure should look like the following:</p> <div class="language- extra-class"><pre class="language-text"><code>.
+├─ docs
+│  ├─ readme.md
+│  ├─ blogs
+│  └─ .vuepress
+│     └─ config.js
+│     └─ theme
+│        └─ Layout.vue
+└─ package.json
+</code></pre></div><p>Put a basic Vue boilerplate inside Layout.vue:</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ $site.title }}&lt;/h1&gt; 
+    &lt;div&gt;Your blog goes here&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;&lt;/script&gt;
+
+&lt;style&gt;&lt;/style&gt;
+</code></pre></div><p>Restart the server. Default theme should be overwritten now. Awesomeness!</p> <h1 id="adding-tailwindcss"><a href="#adding-tailwindcss" aria-hidden="true" class="header-anchor">#</a> Adding tailwindcss</h1> <p>Our last step is to add tailwindcss. Many steps on this article is taken from the installation steps provided by <a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener noreferrer">tailwind<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <p>Npm install <code>tailwindcss</code> and <code>autoprefixer</code>.</p> <div class="language- extra-class"><pre class="language-text"><code>npm i --save tailwindcss autoprefixer
+</code></pre></div><p>Then create config file for tailwind by running:</p> <div class="language- extra-class"><pre class="language-text"><code>npx tailwind init
+</code></pre></div><p>We now have tailwind.config.js at root. Inside that file, you'll see something like this:</p> <div class="language- extra-class"><pre class="language-text"><code>module.exports = {
+  theme: {
+    extend: {}
+  },
+  variants: {},
+  plugins: []
+}
+
+</code></pre></div><p>Go back to docs/.vuepress/config.js, add postcss config:</p> <div class="language- extra-class"><pre class="language-text"><code>module.exports = {
+  title: &quot;Hello Tailwind-Press!&quot;,
+  description: &quot;Blog v0.0.1&quot;,
+  themeConfig: {
+    nav: [
+      {
+        text: &quot;blogs&quot;,
+        items: [
+          { text: &quot;blog1&quot;, link: &quot;/blogs/blog1.md&quot; },
+          { text: &quot;blog2&quot;, link: &quot;/blogs/blog2.md&quot; }
+        ]
+      }
+    ]
+  },
+  postcss: {
+    plugins: [
+      require(&quot;autoprefixer&quot;),
+      require(&quot;tailwindcss&quot;)(&quot;./tailwind.config.js&quot;)
+    ]
+  }
+};
+</code></pre></div><p>Next time server is run, it will run postcss and it will use both autoprefixer and tailwindcss plugins. Right now we haven't had any tailwindcss defined yet. Let's do that now.</p> <p>Inside docs/.vuepress/theme, create a new css (styl) directory and file. I called the dir &quot;styles&quot; and the file &quot;style.styl'. You can give them any name you want (mine is at <code>docs/.vuepress/theme/styles/style.styl</code>. <em>Most/ all tutorials I've seen use .styl instead of .css. Per <a href="https://vuepress.vuejs.org/default-theme-config/#simple-css-override" target="_blank" rel="noopener noreferrer">vuepress doc<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>, it looks like you can use .css, but they use stylus, so that's what I am going with. I haven't tried it with .css.</em>)</p> <p>Insert the following inside style.styl:</p> <div class="language- extra-class"><pre class="language-text"><code>@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+</code></pre></div><p>Great. Our tailwindcss is ready to go. We just need to import it. Inside Layout.vue, add:</p> <div class="language- extra-class"><pre class="language-text"><code>// Layout.vue
+
+...
+
+&lt;style lang=&quot;stylus&quot;&gt;
+  @import './styles/style.styl';
+&lt;/style&gt;
+</code></pre></div><p>We haven't mentioned any tailwindcss classes yet. Let's style it up a bit more (<em>btw, the snippet is mostly taken from <a href="https://tailwindcss.com/components/navigation/#responsive-header" target="_blank" rel="noopener noreferrer">tailwindcss site<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></em>).</p> <div class="language- extra-class"><pre class="language-text"><code>// Layout.vue
+
+&lt;template&gt;
+&lt;nav class=&quot;flex items-center justify-between flex-wrap bg-blue-500 p-6&quot;&gt;
+  &lt;div class=&quot;flex items-center flex-shrink-0 text-white mr-6&quot;&gt;
+    &lt;svg class=&quot;fill-current h-8 w-8 mr-2&quot; width=&quot;54&quot; height=&quot;54&quot; viewBox=&quot;0 0 54 54&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;path d=&quot;M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z&quot;/&gt;&lt;/svg&gt;
+    &lt;span class=&quot;font-semibold text-xl tracking-tight&quot;&gt;{{ $site.title }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+&lt;/template&gt;
+
+&lt;script&gt;&lt;/script&gt;
+
+&lt;style lang=&quot;stylus&quot;&gt;
+	@import './styles/style.styl';
+&lt;/style&gt;
+</code></pre></div><p>You should see tailwindcss styling. That's it! Now you are free to unleash the power of the dark side... I mean creative side.</p> <p><img src="https://media.giphy.com/media/nlWGe7Q64zwQ0/giphy.gif" alt="vader impressed"></p> <p>Questions are always welcome. Happy hacking!</p></div></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.411ac2ac.js" defer></script><script src="/assets/js/2.826a9c57.js" defer></script><script src="/assets/js/22.443a8923.js" defer></script>
+  </body>
+</html>

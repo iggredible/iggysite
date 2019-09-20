@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Intro to Virtual DOM | Hello there.</title>
+    <meta name="description" content="Things Iggy writes about">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.74245eb8.css" as="style"><link rel="preload" href="/assets/js/app.411ac2ac.js" as="script"><link rel="preload" href="/assets/js/2.826a9c57.js" as="script"><link rel="preload" href="/assets/js/12.82d02492.js" as="script"><link rel="prefetch" href="/assets/js/10.33a00c4d.js"><link rel="prefetch" href="/assets/js/11.9e2c5904.js"><link rel="prefetch" href="/assets/js/13.2bba91b0.js"><link rel="prefetch" href="/assets/js/14.496d3aa4.js"><link rel="prefetch" href="/assets/js/15.8e326966.js"><link rel="prefetch" href="/assets/js/16.a4da2abb.js"><link rel="prefetch" href="/assets/js/17.8eec3b06.js"><link rel="prefetch" href="/assets/js/18.edb89630.js"><link rel="prefetch" href="/assets/js/19.4431ab75.js"><link rel="prefetch" href="/assets/js/20.4463634e.js"><link rel="prefetch" href="/assets/js/21.d60a97f5.js"><link rel="prefetch" href="/assets/js/22.443a8923.js"><link rel="prefetch" href="/assets/js/23.cdd341e7.js"><link rel="prefetch" href="/assets/js/3.14889d81.js"><link rel="prefetch" href="/assets/js/4.6512c86b.js"><link rel="prefetch" href="/assets/js/5.839bfab5.js"><link rel="prefetch" href="/assets/js/6.3a95a3b3.js"><link rel="prefetch" href="/assets/js/7.00a5fbce.js"><link rel="prefetch" href="/assets/js/8.27c044bc.js"><link rel="prefetch" href="/assets/js/9.b297b1cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.74245eb8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><header class="px-6 bg-white flex flex-wrap items-center py-8"><input type="checkbox" id="menu-toggle" class="hidden"> <label id="hamburger" for="menu-toggle" class="fixed cursor-pointer block z-20"><div id="burgerToggle" class="cursor-pointer"><span></span> <span></span> <span></span></div></label> <div id="sideMenu" class="bg-gray-800 z-10 fixed top-0 left-0 bottom-0 w-64"><ul class="my-16 mx-4"><li class="my-4 cursor-default hover:no-underline"><div class="container flex flex-col items-start justify-center"><div class="my-4"><img src="/assets/img/iggy_square.57401581.jpg" class="ml-0 h-20 w-20 mb-4 rounded-full"> <div class="font-bold text-white mb-4">Igor Irianto</div> <div class="font-light text-gray-500 text-sm">Frontend dev who likes to post about Vim, JS, and other computer stuff. Lives in Dallas. Married. He doesn't have a lot of twitter follower so you should <a href="https://twitter.com/iggredible">add him</a>.</div></div></div></li> <li class="my-4 text-white font-light"><a href="#">Blogs</a></li> <li class="my-4 text-white font-light"><a href="#">About</a></li></ul></div> <div class="absolute top-0 right-0 m-4"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header> <div class="container max-w-5xl mx-auto"><!----> <div class="max-w-4xl mx-auto"><div class="relative"><div class="fixed top-4 left-0 pl-5"><a href="/">Home</a></div> <div class="content mx-16 lg:mx-24"><h1 class="text-center">Intro to Virtual DOM</h1> <h6 class="text-center italic font-light m-4">Introduction to Virtual DOM, how to make your own virtual DOM</h6> <h4></h4> <div class="content__default"><p><img src="https://thepracticaldev.s3.amazonaws.com/i/v2eqqpibor579mb9jw5a.jpg" alt="HTML Image on Screen"></p> <h1 id="intro"><a href="#intro" aria-hidden="true" class="header-anchor">#</a> Intro</h1> <p>Imagine you are building your house. One day you want to add a new kitchen island - so you rebuild the house from scratch. Then you want to repaint the house, so you again rebuild the whole house. Then it's time to change your window panes into, so you rebuild it from scratch...again. Unless you are Fix-It Felix, this is not the way to make house updates.</p> <p><img src="https://media.giphy.com/media/MtIPR6C5okdt6/giphy.gif" alt="fix-it-felix"></p> <p>Instead, you should have a blueprint of the house. To add a kitchen island, you find which area will be affected on the blueprint and only rebuild that area. If you want to repaint, calculate the wall perimeter area from blueprint, move out all the stuff next to the wall (just don't do <a href="https://www.youtube.com/watch?v=EiZoSuNej5U" target="_blank" rel="noopener noreferrer">this<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> please), and start painting. If you want to change your window panes, locate all windows from blueprint and replace them.</p> <p>The same can be said about DOM. Think of HTML DOM as a house and virtual DOM as blueprint of the house. We should use virtual DOM to help us make changes to our DOM.
+This post is largely inspired by Jason Yu's <a href="https://www.youtube.com/watch?v=85gJMUEcnkc" target="_blank" rel="noopener noreferrer">Building a Simple Virtual DOM from Scratch<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> video (I am not affiliated with him, but I found his stuff super helpful. You should check him out!). This is a shortened and simplified version. My hope is that readers who are new with virtual DOM will gain better understanding what virtual DOM is.</p> <h1 id="layout-of-the-land"><a href="#layout-of-the-land" aria-hidden="true" class="header-anchor">#</a> Layout of the land</h1> <p>The code can be found in <a href="https://github.com/iggredible/simple-vdom-demo" target="_blank" rel="noopener noreferrer">this github repo<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. This post is divided into 6 steps:</p> <ol><li>Setup</li> <li>Creating virtual DOM</li> <li>Rendering DOM nodes</li> <li>Mounting into HTML page</li> <li>Updating the DOM the inefficient way</li> <li>Updating the DOM the efficient way</li></ol> <p>Let's get started!</p> <h1 id="setup"><a href="#setup" aria-hidden="true" class="header-anchor">#</a> Setup</h1> <p>Before we even begin, make sure we have <a href="https://nodejs.org/en/download/" target="_blank" rel="noopener noreferrer">latest node<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> ready. Create a folder and cd into it, start an NPM project (<code>npm init -y</code>). Create <code>index.html</code> and <code>vdom.js</code> in root directory. For quick bundling, we'll use <a href="https://github.com/parcel-bundler/parcel" target="_blank" rel="noopener noreferrer"><code>parcel-bundler</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> so run <code>npm install parcel-bundler</code>. I also like having &quot;start&quot;: &quot;parcel index.html&quot; in package.json.</p> <p>My <code>index.html</code> looks like this:</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt; 
+    &lt;meta charset=&quot;UTF-8&quot;&gt; 
+    &lt;title&gt;Basic Virtual Dom Demo&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt; 
+    &lt;h1&gt;Virtual Dom Demo&lt;/h1&gt; 
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt; 
+    &lt;script src=&quot;./vdom.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div><p>Just make sure to import <code>vdom.js</code> and have something like <code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code> to mount our DOM later.</p> <h1 id="creating-virtual-dom"><a href="#creating-virtual-dom" aria-hidden="true" class="header-anchor">#</a> Creating virtual DOM</h1> <p>Virtual DOM is nothing but a <em>javascript object that represents DOM nodes</em>. As mentioned earlier, virtual DOM to DOM is what a blueprint is to a house. A house is physical, expensive to update, while a blueprint is just a piece of paper and much easier to update.</p> <p>This is what our virtual DOM looks like:</p> <div class="language- extra-class"><pre class="language-text"><code>const vAppStructure = num =&gt; {
+  return {
+    tagName: &quot;ul&quot;,
+    text: &quot;&quot;,
+    attrs: { class: &quot;parent-class&quot;, id: `parent-id-${num}` },
+    children: [
+      {
+        tagName: &quot;li&quot;,
+        attrs: &quot;&quot;,
+        text: &quot;list 1&quot;,
+        attrs: { class: &quot;child-class&quot; },
+        children: []
+      },
+      {
+        tagName: &quot;li&quot;,
+        attrs: &quot;&quot;,
+        text: &quot;list 2&quot;,
+        attrs: { class: &quot;child-class&quot; },
+        children: [{ tagName: &quot;input&quot;, attrs: &quot;&quot;, text: &quot;&quot;, children: [] }]
+      }
+    ]
+  };
+};
+</code></pre></div><p>Observations:</p> <ol><li>Virtual DOM is a JS object.</li> <li>In this example, it is a function because in the future it needs to be updated. Virtual DOM does not have to be a function at all, it can be a plain JS object (technically you can just do const myVDom = {name: &quot;div&quot;} and that will counts as a VDOM!)</li> <li>The structure represent a <code>&lt;ul&gt;</code> element with 2 <code>&lt;li&gt;</code> children.</li> <li>The 2nd child has another child, an input. It will be used in step 4 later.</li></ol> <h1 id="rendering-dom-nodes"><a href="#rendering-dom-nodes" aria-hidden="true" class="header-anchor">#</a> Rendering DOM Nodes</h1> <p>We have a virtual DOM structure now. We should render it into DOM nodes. The main Javascript APIs needed in this post are: <code>document.createElement</code>, <code>Element.setAttribute</code>, <code>document.createTextNode</code>, and <code>Element.appendChild</code>. First to create element, second to set attributes, third to deal with text, and fourth to attach any child into parent. You'll see <code>$</code> notation throughout the codes - variables with <code>$</code> represent DOM nodes.</p> <div class="language- extra-class"><pre class="language-text"><code>const renderer = node =&gt; {
+  const { tagName, text, attrs, children } = node;
+  const $elem = document.createElement(tagName);
+
+  for (const attr in attrs) {
+    $elem.setAttribute(attr, attrs[attr]);
+  }
+
+  if (text) {
+    const $text = document.createTextNode(text);
+    $elem.appendChild($text);
+  }
+
+  if (children &amp;&amp; children.length &gt; 0) {
+    for (const child of children) {
+      const $child = renderer(child);
+      $elem.appendChild($child);
+    }
+  }
+
+  return $elem;
+};
+</code></pre></div><p>Observations:</p> <ol><li>The <code>tagName</code> that we have in virtual DOM is rendered using <code>document.createElement</code>.</li> <li>Each <code>attrs</code> is iterated and is set onto that newly-created-element.</li> <li>If there is a text, we create and append it into that element.</li> <li>If our virtual DOM contains children, it goes through each child and <em>recursively</em> run renderer function on each element (if the children have children, they will go through the same recursion, and so on, until no children is found). The children is appended into the original element.</li></ol> <p>Now that we have DOM nodes created, attributes and text appended, and children rendered and appended - these DOM nodes can't wait to be attached into our HTML file, so let's mount it!</p> <h1 id="mounting"><a href="#mounting" aria-hidden="true" class="header-anchor">#</a> Mounting</h1> <p>Think of mounting as placing our nodes into HTML page. We will use <code>document.replaceWith</code>.</p> <div class="language- extra-class"><pre class="language-text"><code>const mount = ($nodeToReplace, $nodeTarget) =&gt; {
+  $nodeTarget.replaceWith($nodeToReplace);
+  return $nodeToReplace;
+};
+</code></pre></div><p>Now we have all the functions we need. Let's set up some selectors and mount it:</p> <div class="language- extra-class"><pre class="language-text"><code>const app = document.querySelector(&quot;#app&quot;);
+let num = 10;
+let currentVApp = vAppStructure(num); 
+let $vApp = renderer(currentVApp); 
+mount($vApp, app);
+</code></pre></div><p>You can run <code>parcel index.html</code> (or <code>npm run start</code>) and watch your virtual DOM displayed in HTML! Super cool. You have rendered your own HTML page using pure Javascript with virtual DOM! This is basic virtual DOM and it is powerful. Next we will explore the power of virtual DOM by updating it periodically.</p> <h1 id="updating-the-inefficient-way"><a href="#updating-the-inefficient-way" aria-hidden="true" class="header-anchor">#</a> Updating (the inefficient way)</h1> <p>The power of virtual DOM is whenever you update your JS object without needing screen refresh. 
+To demonstrate updating, we will use <code>setInterval</code> to increase the number per second.</p> <div class="language- extra-class"><pre class="language-text"><code>let $rootElem = mount($vApp, app);
+let newVApp;
+
+setInterval(() =&gt; {
+  num++;
+  newVApp = vAppStructure(num);
+  let $newVApp = renderer(newVApp);
+  $rootElem = mount($newVApp, $rootElem);
+
+  currentVApp = newVApp;
+}, 1000);
+</code></pre></div><p>Now if you open up devTools and observe the id of <code>ul</code> element - <em>it is now increasing by 1</em>. Sweet! We have a working, self-updating DOM node. Beautiful!!</p> <p>Observations:</p> <ol><li>Note the assignment$rootElem = mount($newVApp, $rootElem). This is necessary because we are mounting the updated DOM nodes with different number and we are replacing the old one with new one each second. Mounting returns the updated DOM nodes, so we are constantly replacing the old one with new one.</li> <li>There is a problem. Try typing something on input, it gets refreshed each second. This is because the entire DOM is being replaced each second including input. We want to update affected component only without re-rendering the entire DOM.</li></ol> <p>Let's do it the right way!</p> <h1 id="updating-the-efficient-way"><a href="#updating-the-efficient-way" aria-hidden="true" class="header-anchor">#</a> Updating the efficient way</h1> <p>One of the most popular Frontend library in the world, React, uses virtual DOM. The way React treats virtual DOM is by <a href="https://reactjs.org/docs/reconciliation.html" target="_blank" rel="noopener noreferrer">diffing<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <ol><li>React creates virtual DOM of the app and saves a copy.</li> <li>When a change occurs (say someone updates a state), React compares the previous copy of virtual DOM with recent copy of virtualDOM - it makes a list of all the differences.</li> <li>React updates the actual DOM based on the differences found.</li></ol> <p>We will create a (very) simplified version of diffing.</p> <div class="language- extra-class"><pre class="language-text"><code>const diff = (oldVApp, newVApp) =&gt; {
+  const patchAttrs = diffAttrs(oldVApp.attrs, newVApp.attrs);
+
+  return $node =&gt; {
+    patchAttrs($node);
+    return $node; // important to return $node, because after diffing, we patch($rootElem) and it expects to return some sort of element!
+  };
+};
+export default diff;
+</code></pre></div><p>Observations:</p> <ol><li>It takes old virtual DOM and new virtual DOM as arguments. Beware, since it is simplified, it will not try to find the differences between old and new virtual DOM but it will simply apply the new attributes into the DOM elements.</li></ol> <p>The <code>diffAttrs</code> function looks like this;</p> <div class="language- extra-class"><pre class="language-text"><code>const diffAttrs = (oldAttrs, newAttrs) =&gt; {
+  const patches = [];
+
+  for (const attr in newAttrs) {
+    patches.push($node =&gt; {
+      $node.setAttribute(attr, newAttrs[attr]);
+      return $node;
+    });
+  }
+
+  for (const attr in oldAttrs) {
+    if (!(attr in newAttrs)) {
+      patches.push($node =&gt; {
+        $node.removeAttribute(attr);
+        return $node;
+      });
+    }
+  }
+  return $node =&gt; {
+    for (const patch of patches) {
+      patch($node);
+    }
+  };
+};
+</code></pre></div><p>Observations:</p> <ol><li>We are only diffing only attributes and not <code>text</code>, <code>children</code>, <code>tagName</code>. For the sake of brevity I skipped them. The logic is similar though.</li> <li>When iterating through all attributes, each new attribute is set into the element node (so if new one has <code>id=&quot;my-id-2&quot;</code>), it will set that new id into the element node.</li> <li>We check each <code>attr</code> in <code>oldAttrs</code>. The assumption is if an attribute is found in <code>oldAttrs</code> that does not exist in <code>newAttrs</code>, that attribute must have gotten removed, so we delete it.</li> <li>We return a function to perform patch later.</li></ol> <p>Our updated setInterval will look like this:</p> <div class="language- extra-class"><pre class="language-text"><code>setInterval(() =&gt; {
+ num++;
+ newVApp = vAppStructure(num);
+
+ const patch = diff(currentVApp, newVApp);
+ $rootElem = patch($rootElem);
+currentVApp = newVApp;
+}, 1000);
+</code></pre></div><p>Observations:</p> <ol><li>Instead of remounting the entire updated HTML element per second, we are setting attributes on new DOM nodes. This will not re-render the entire DOM. <code>input</code> now works as expected.</li></ol> <h1 id="conclusion"><a href="#conclusion" aria-hidden="true" class="header-anchor">#</a> Conclusion</h1> <p>To recap, here is what we learned:</p> <ol><li><p>Virtual DOM is a plain JS object describing what a DOM should look like, like a blueprint of a house (whereas a DOM is like a house).</p></li> <li><p>Mounting virtual DOM is a process of iterating virtual DOM properties and calling <code>setElement</code>, <code>createTextNode</code>, <code>setAttribute</code>, and <code>appendChild</code> (there are more APIs needed in more complicated app ).</p></li> <li><p>The best way to update our app is not to replace the entire DOM structure per update (it will force other element to re-render unnecessarily like <code>input</code>), but to go through each attribute in each element and set new attributes. Doing this will not re-render the element.</p></li></ol> <p>This is far from perfect - it is a simplified representation of what React/ other framework does.</p> <p>Thanks for reading this. Appreciate you spending your time and reading! If you have any questions, found mistakes, please feel free to drop by comments. Let me know what new thing you learned from this!</p> <p>Some resources I found helpful:</p> <ul><li><a href="https://www.codecademy.com/articles/react-virtual-dom" target="_blank" rel="noopener noreferrer">React Virtual DOM<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://medium.com/@gethylgeorge/how-virtual-dom-and-diffing-works-in-react-6fc805f9f84e" target="_blank" rel="noopener noreferrer">How Virtual-DOM and diffing works in React<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="http://taligarsiel.com/Projects/howbrowserswork1.htm" target="_blank" rel="noopener noreferrer">How Browsers Work<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.411ac2ac.js" defer></script><script src="/assets/js/2.826a9c57.js" defer></script><script src="/assets/js/12.82d02492.js" defer></script>
+  </body>
+</html>

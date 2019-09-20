@@ -1,0 +1,25 @@
+{
+  "name": "iggy-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build",
+    "docs:build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "Igor L Irianto <igoririanto@rocketmail.com>",
+  "license": "mit",
+  "devDependencies": {
+    "@vuepress/plugin-search": "1.0.0-rc.1",
+    "vuepress": "1.0.3"
+  },
+  "dependencies": {
+    "@jeremyhamm/vue-slider": "0.1.16",
+    "autoprefixer": "9.6.1",
+    "postcss-import": "12.0.1",
+    "postcss-loader": "3.0.0",
+    "tailwindcss": "1.1.2"
+  }
+}
